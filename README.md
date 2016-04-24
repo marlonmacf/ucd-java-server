@@ -6,7 +6,6 @@ Tecnologias utilizadas no projeto:
 
 - Projeto Web Java
 - Projeto Maven
-- Spring Framework
 - Spring Boot
 - Spring MVC
 - Spring Data JPA
