@@ -1,2 +1,14 @@
-# ucd-java-server
-Unidos Contra a Dengue - JAVA WEB SERVER
+#JAVA WEB SERVER
+
+Projeto responsável por prover acesso a base de dados, assim como seus modelos e regras de negócio para as aplicações web e android.
+
+Tecnologias utilizadas no projeto:
+
+- Projeto Web Java
+- Projeto Maven
+- Spring Framework
+- Spring Boot
+- Spring MVC
+- Spring Data JPA
+- Hibernate
+- MS SQL Server
