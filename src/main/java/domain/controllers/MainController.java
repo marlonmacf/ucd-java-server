@@ -19,10 +19,10 @@ public class MainController {
 
     @RequestMapping("/greeting")
     @ResponseBody
-    public Map<String, String> greeting(@RequestParam(value = "name", defaultValue = "server") String name) {
+    public Map<String, String> greeting(@RequestParam(value = "app", defaultValue = "server") String app) {
 
         Map<String, String> params = new HashMap<>();
-        params.put("name", name);
+        params.put("app", app);
         return params;
     }
 }
