@@ -3,6 +3,8 @@ package domain.repositories;
 import domain.entities.User;
 import org.springframework.data.repository.CrudRepository;
 
+import java.util.List;
+
 /**
  * A Repository for the entity User is simply created by extending the
  * CrudRepository interface provided by spring. The following methods are some
@@ -14,6 +16,11 @@ import org.springframework.data.repository.CrudRepository;
  * @author mandrel
  */
 public interface UserRepository extends CrudRepository<User, Long> {
+
+    /**
+     * Return all users.
+     */
+    public List<User> findAll();
 
     /**
      * Return the user having the passed email or null if no user is found.
