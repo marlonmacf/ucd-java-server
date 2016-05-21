@@ -10,4 +10,5 @@ Tecnologias utilizadas no projeto:
 - Spring MVC
 - Spring Data JPA
 - Hibernate
-- MS SQL Server
+- PostgreSQL
+- Heroku PaaS
