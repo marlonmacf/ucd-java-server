@@ -21,8 +21,9 @@ public class MainController {
     @ResponseBody
     public Map<String, String> greeting(@RequestParam(value = "app", defaultValue = "server") String app) {
 
+        String response = "server/" + app;
         Map<String, String> params = new HashMap<>();
-        params.put("app", app);
+        params.put("app", response);
         return params;
     }
 }
