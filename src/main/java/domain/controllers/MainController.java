@@ -19,13 +19,10 @@ public class MainController {
 
     @RequestMapping("/greeting")
     @ResponseBody
-    public String greeting() {
+    public Map<String, String> greeting(@RequestParam(value = "name", defaultValue = "server") String name) {
 
-        return "Unidos Contra a Dengue - Aplicação Servidor";
-        /*
         Map<String, String> params = new HashMap<>();
-        params.put("name", "app: " + name);
+        params.put("name", name);
         return params;
-        */
     }
 }
