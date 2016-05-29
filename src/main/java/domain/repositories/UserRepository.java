@@ -17,16 +17,6 @@ import java.util.List;
  */
 public interface UserRepository extends CrudRepository<User, Long> {
 
-    /**
-     * Return all users.
-     */
-    public List<User> findAll();
-
-    /**
-     * Return the user having the passed email or null if no user is found.
-     *
-     * @param email the user email.
-     */
-    public User findByEmail(String email);
+    public User findByEmailAndPassword(String email, String password);
 
 } // class UserRepository
