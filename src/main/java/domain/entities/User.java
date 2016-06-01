@@ -43,11 +43,11 @@ public class User {
         this.id = id;
     }
 
-    public User(String name, String email, String password, Boolean inspecetor, Byte score) {
+    public User(String name, String email, String password, Boolean inspector, Byte score) {
         this.name = name;
         this.email = email;
         this.password = password;
-        this.inspector = inspecetor;
+        this.inspector = inspector;
         this.score = score;
     }
 
@@ -83,7 +83,7 @@ public class User {
         this.password = value;
     }
 
-    public Boolean getInspactor() {
+    public Boolean getInspector() {
         return inspector;
     }
 
@@ -101,13 +101,13 @@ public class User {
 
     @Override
     public String toString() {
-        return "User{" +
-                "id=" + id +
-                ", name='" + name + '\'' +
-                ", email='" + email + '\'' +
-                ", password='" + password + '\'' +
-                ", inspector=" + inspector +
-                ", score=" + score +
+        return "{" +
+                "id:" + id +
+                ", name:'" + name +
+                ", email:'" + email +
+                ", password:'" + password +
+                ", inspector:" + inspector +
+                ", score:" + score +
                 '}';
     }
 

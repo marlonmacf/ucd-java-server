@@ -23,7 +23,7 @@ public class UserController {
 
     @RequestMapping(value = "/user", method = RequestMethod.GET)
     @ResponseBody
-    public String index() {
+    public String fetch() {
         try {
             return mapper.writeValueAsString(userRepository.findAll());
         } catch (Exception ex) {
@@ -33,7 +33,7 @@ public class UserController {
 
     @RequestMapping(value = "/user", method = RequestMethod.POST)
     @ResponseBody
-    public String store(String email, String name, String password, Boolean inspector, Byte score) {
+    public String insert(String email, String name, String password, Boolean inspector, Byte score) {
         try {
             User user = new User(name, email, password, inspector, score);
             userRepository.save(user);
@@ -43,7 +43,7 @@ public class UserController {
         }
     }
 
-    @RequestMapping(value = "/user/{user]", method = RequestMethod.PUT)
+    @RequestMapping(value = "/user/{user}", method = RequestMethod.PUT)
     @ResponseBody
     public String update(@PathVariable("user") Integer userId, String email, String name, String password, Boolean inspector, Byte score) {
         try {
@@ -62,7 +62,7 @@ public class UserController {
 
     @RequestMapping(value = "/user/{user}", method = RequestMethod.DELETE)
     @ResponseBody
-    public String destroy(@PathVariable("user") Integer userId) {
+    public String delete(@PathVariable("user") Integer userId) {
         try {
             User user = new User(userId);
             userRepository.delete(user);
