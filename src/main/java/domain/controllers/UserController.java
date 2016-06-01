@@ -15,6 +15,7 @@ public class UserController {
 
     @Autowired
     private UserRepository userRepository;
+
     private ObjectMapper mapper;
 
     public UserController() {
@@ -47,7 +48,7 @@ public class UserController {
     @ResponseBody
     public String update(@PathVariable("user") Integer userId, String email, String name, String password, Boolean inspector, Byte score) {
         try {
-            User user = userRepository.findOne(Long.valueOf(userId));
+            User user = userRepository.findOne(userId);
             user.setEmail(email);
             user.setName(name);
             user.setPassword(password);
@@ -79,6 +80,16 @@ public class UserController {
             return mapper.writeValueAsString(userRepository.findByEmailAndPassword(email, password));
         } catch (Exception ex) {
             return "User not found - " + ex.toString();
+        }
+    }
+
+    @RequestMapping(value = "/user/ranking", method = RequestMethod.GET)
+    @ResponseBody
+    public String ranking() {
+        try {
+            return mapper.writeValueAsString(userRepository.findAllByOrderByScoreDesc());
+        } catch (Exception ex) {
+            return "Error finding the users: " + ex.toString();
         }
     }
 

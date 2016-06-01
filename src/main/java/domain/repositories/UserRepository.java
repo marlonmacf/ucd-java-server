@@ -11,8 +11,10 @@ import java.util.List;
  *
  * @author mandrel
  */
-public interface UserRepository extends CrudRepository<User, Long> {
+public interface UserRepository extends CrudRepository<User, Integer> {
 
     public User findByEmailAndPassword(String email, String password);
+
+    public Iterable<User> findAllByOrderByScoreDesc();
 
 } // class UserRepository

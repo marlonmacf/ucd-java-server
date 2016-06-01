@@ -2,7 +2,7 @@ package domain.entities;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Null;
+import java.util.Set;
 
 /**
  * An entity User composed by six fields (id, name, email, password, inspector, score).
@@ -22,17 +22,16 @@ public class User {
     @NotNull
     private String name;
 
-    @NotNull
     @Column(unique = true)
     private String email;
 
     @NotNull
     private String password;
 
-    @Null
+    @NotNull
     private Boolean inspector;
 
-    @Null
+    @NotNull
     private Byte score;
 
     public User() {
@@ -109,6 +108,7 @@ public class User {
                 ", inspector:" + inspector +
                 ", score:" + score +
                 '}';
+        //TODO: add the set of complaints..
     }
 
 } // class User
