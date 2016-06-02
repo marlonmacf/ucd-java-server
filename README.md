@@ -20,10 +20,10 @@ Tecnologias utilizadas no projeto:
 |GET    |"/user"                 |List<User>     |fetch()                                                                          |
 |POST   |"/user"                 |User           |insert(String email, String name, String password, Boolean inspector, Byte score)|
 |PUT    |"/user/{user}"          |User           |update(String email, String name, String password, Boolean inspector, Byte score)|
-|DELETE |"/user/{user}"          |User           |delete(Integer userId)                                                           |
+|DELETE |"/user/{user}"          |User           |delete()                                                           |
 |GET    |"/user/login"           |User           |login(String email, String password)                                             |
 |GET    |"/user/ranking"         |List<User>     |ranking()                                                                        |
 |GET    |"/complaint"            |List<Complaint>|fetch()                                                                          |
-|POST   |"/complaint"            |Complaint      |insert(Complaint complaint)                                                      |
-|PUT    |"/complaint/{complaint}"|Complaint      |update(Complaint complaint)                                                      |
-|DELETE |"/complaint/{complaint}"|Complaint      |delete (Integer complaintId)                                                     |
+|POST   |"/complaint"            |Complaint      |insert(Integer userId, String latitude, String longitude, String description)                                                      |
+|PUT    |"/complaint/{complaint}"|Complaint      |update(Integer inspectorId, String latitude, String longitude, String description, String status)                                                      |
+|DELETE |"/complaint/{complaint}"|Complaint      |delete ()                                                     |
