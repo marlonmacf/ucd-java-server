@@ -15,16 +15,16 @@ public class Complaint {
 
     @NotNull
     @ManyToOne
-    @JoinColumn(name = "iduser")
+    @JoinColumn(name = "id_user")
     private User user;
 
     @Null
     @ManyToOne
-    @JoinColumn(name = "idinspector")
+    @JoinColumn(name = "id_inspector")
     private User inspector;
 
     @NotNull
-    private Boolean status;
+    private String status;
 
     @NotNull
     private String latitude;
@@ -32,8 +32,11 @@ public class Complaint {
     @NotNull
     private String longitude;
 
+    @Null
+    private String description;
+
     @OneToMany(mappedBy = "complaint", cascade = CascadeType.ALL)
-    private Set<ComplaintPhotos> complaintPhotos;
+    private Set<ComplaintPhoto> complaintPhotos;
 
     public Complaint() {
         // Default constructor.
@@ -41,23 +44,6 @@ public class Complaint {
 
     public Complaint(Integer id) {
         this.id = id;
-    }
-
-    public Complaint(User user, Boolean status, String latitude, String longitude, Set<ComplaintPhotos> complaintPhotos) {
-        this.user = user;
-        this.status = status;
-        this.latitude = latitude;
-        this.longitude = longitude;
-        this.complaintPhotos = complaintPhotos;
-    }
-
-    public Complaint(User user, User inspector, Boolean status, String latitude, String longitude, Set<ComplaintPhotos> complaintPhotos) {
-        this.user = user;
-        this.inspector = inspector;
-        this.status = status;
-        this.latitude = latitude;
-        this.longitude = longitude;
-        this.complaintPhotos = complaintPhotos;
     }
 
     public Integer getId() {
@@ -84,11 +70,11 @@ public class Complaint {
         this.inspector = inspector;
     }
 
-    public Boolean getStatus() {
+    public String getStatus() {
         return status;
     }
 
-    public void setStatus(Boolean status) {
+    public void setStatus(String status) {
         this.status = status;
     }
 
@@ -108,25 +94,25 @@ public class Complaint {
         this.longitude = longitude;
     }
 
-    public Set<ComplaintPhotos> getComplaintPhotos() {
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    public Set<ComplaintPhoto> getComplaintPhotos() {
         return complaintPhotos;
     }
 
-    public void setComplaintPhotos(Set<ComplaintPhotos> complaintPhotos) {
+    public void setComplaintPhotos(Set<ComplaintPhoto> complaintPhotos) {
         this.complaintPhotos = complaintPhotos;
     }
 
     @Override
     public String toString() {
-        return "{" +
-                "id:" + id +
-                ", idUser:" + user.getId() +
-                ", idInspector:" + inspector.getId() +
-                ", status:" + status +
-                ", latitude:'" + latitude +
-                ", longitude:'" + longitude +
-                '}';
-        //TODO: add the set of photos..
+        return "{id:" + id + ", idUser:" + user.getId() + ", idInspector:" + inspector.getId() + ", status:" + status + ", latitude:" + latitude + ", longitude:" + longitude + "}";
     }
 
 }

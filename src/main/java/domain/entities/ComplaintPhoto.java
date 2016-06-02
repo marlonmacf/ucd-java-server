@@ -1,11 +1,13 @@
 package domain.entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 
 @Entity
-@Table(name = "complaintPhotos", schema = "ucd")
-public class ComplaintPhotos {
+@Table(name = "complaint_photo", schema = "ucd")
+public class ComplaintPhoto {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -13,7 +15,8 @@ public class ComplaintPhotos {
 
     @NotNull
     @ManyToOne
-    @JoinColumn(name = "idcomplaint")
+    @JoinColumn(name = "id_complaint")
+    @JsonIgnore
     private Complaint complaint;
 
     @NotNull
@@ -23,20 +26,14 @@ public class ComplaintPhotos {
     private String name;
 
     @NotNull
-    private String pathphoto;
+    private String path;
 
-    public ComplaintPhotos() {
+    public ComplaintPhoto() {
         // Default constructor.
     }
 
-    public ComplaintPhotos(Integer id) {
+    public ComplaintPhoto(Integer id) {
         this.id = id;
-    }
-
-    public ComplaintPhotos(String extension, String name, String pathphoto) {
-        this.extension = extension;
-        this.name = name;
-        this.pathphoto = pathphoto;
     }
 
     public Integer getId() {
@@ -71,23 +68,17 @@ public class ComplaintPhotos {
         this.name = name;
     }
 
-    public String getPathphoto() {
-        return pathphoto;
+    public String getPath() {
+        return path;
     }
 
-    public void setPathphoto(String pathphoto) {
-        this.pathphoto = pathphoto;
+    public void setPath(String path) {
+        this.path = path;
     }
 
     @Override
     public String toString() {
-        return "{" +
-                "id:" + id +
-                ", idComplaint:" + complaint.getId() +
-                ", extension:'" + extension +
-                ", name:'" + name +
-                ", pathPhoto:'" + pathphoto +
-                '}';
+        return "{id:" + id + ", idComplaint:" + complaint.getId() + ", extension:'" + extension + ", name:'" + name + ", pathPhoto:'" + path + "}";
     }
 
 }

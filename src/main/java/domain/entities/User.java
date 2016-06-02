@@ -29,9 +29,6 @@ public class User {
     private String password;
 
     @NotNull
-    private Boolean inspector;
-
-    @NotNull
     private Byte score;
 
     public User() {
@@ -42,73 +39,49 @@ public class User {
         this.id = id;
     }
 
-    public User(String name, String email, String password, Boolean inspector, Byte score) {
-        this.name = name;
-        this.email = email;
-        this.password = password;
-        this.inspector = inspector;
-        this.score = score;
-    }
-
-    public long getId() {
+    public Integer getId() {
         return id;
     }
 
-    public void setId(Integer value) {
-        this.id = value;
+    public void setId(Integer id) {
+        this.id = id;
     }
 
     public String getName() {
         return name;
     }
 
-    public void setName(String value) {
-        this.name = value;
+    public void setName(String name) {
+        this.name = name;
     }
 
     public String getEmail() {
         return email;
     }
 
-    public void setEmail(String value) {
-        this.email = value;
+    public void setEmail(String email) {
+        this.email = email;
     }
 
     public String getPassword() {
         return password;
     }
 
-    public void setPassword(String value) {
-        this.password = value;
-    }
-
-    public Boolean getInspector() {
-        return inspector;
-    }
-
-    public void setInspector(Boolean value) {
-        this.inspector = value;
+    public void setPassword(String password) {
+        this.password = password;
     }
 
     public Byte getScore() {
         return score;
     }
 
-    public void setScore(Byte value) {
-        this.score = value;
+    public void setScore(Byte score) {
+        this.score = score;
     }
 
     @Override
     public String toString() {
-        return "{" +
-                "id:" + id +
-                ", name:'" + name +
-                ", email:'" + email +
-                ", password:'" + password +
-                ", inspector:" + inspector +
-                ", score:" + score +
-                '}';
-        //TODO: add the set of complaints..
+        return "{id:" + id + ", name:'" + name + ", email:'" + email + ", password:'" + password + ", score:" + score + "}";
     }
 
 } // class User

@@ -2,13 +2,11 @@ package domain.controllers;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import domain.entities.Complaint;
+import domain.entities.User;
 import domain.repositories.ComplaintRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 
 @Controller
 public class ComplaintController {
@@ -34,12 +32,16 @@ public class ComplaintController {
 
     @RequestMapping(value = "/complaint", method = RequestMethod.POST)
     @ResponseBody
-    public String insert() {
+    public String insert(@RequestParam(value = "description", defaultValue = "") Integer userId, String latitude, String longitude, String description) {
         try {
             Complaint complaint = new Complaint();
-            //TODO: add parameters
+            complaint.setUser(new User(userId));
+            complaint.setStatus("STARTED");
+            complaint.setLatitude(latitude);
+            complaint.setLongitude(longitude);
+            complaint.setDescription(description);
             complaintRepository.save(complaint);
-            return "Complaint succesfully created! (id = " + complaint.getId() + ")";
+            return mapper.writeValueAsString(complaint);
         } catch (Exception ex) {
             return "Error creating the complaint: " + ex.toString();
         }
@@ -47,24 +49,30 @@ public class ComplaintController {
 
     @RequestMapping(value = "/complaint/{complaint}", method = RequestMethod.PUT)
     @ResponseBody
-    public String update(@PathVariable("complaint") Integer complaintId) {
+    public String update(@PathVariable("complaint") Integer complaintId, Integer inspectorId, String latitude, String longitude, String description, String status) {
+
         try {
             Complaint complaint = complaintRepository.findOne(complaintId);
-            //TODO: add parameters
+            complaint.setStatus(status);
+            complaint.setLatitude(latitude);
+            complaint.setLongitude(longitude);
+            complaint.setDescription(description);
+            if (inspectorId != null) {
+                complaint.setInspector(new User(inspectorId));
+            }
             complaintRepository.save(complaint);
+            return mapper.writeValueAsString(complaint);
         } catch (Exception ex) {
             return "Error updating the complaint: " + ex.toString();
         }
-        return "Complaint succesfully updated!";
     }
 
     @RequestMapping(value = "/complaint/{complaint}", method = RequestMethod.DELETE)
     @ResponseBody
     public String delete(@PathVariable("complaint") Integer complaintId) {
         try {
-            Complaint complaint = new Complaint(complaintId);
-            complaintRepository.delete(complaint);
-            return "Complaint succesfully deleted!";
+            complaintRepository.delete(new Complaint(complaintId));
+            return "Complaint " + complaintId + " succesfully deleted!";
         } catch (Exception ex) {
             return "Error deleting the complaint:" + ex.toString();
         }

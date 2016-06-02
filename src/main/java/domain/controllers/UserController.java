@@ -34,11 +34,15 @@ public class UserController {
 
     @RequestMapping(value = "/user", method = RequestMethod.POST)
     @ResponseBody
-    public String insert(String email, String name, String password, Boolean inspector, Byte score) {
+    public String insert(String email, String name, String password, Byte score) {
         try {
-            User user = new User(name, email, password, inspector, score);
+            User user = new User();
+            user.setEmail(email);
+            user.setName(name);
+            user.setPassword(password);
+            user.setScore(score);
             userRepository.save(user);
-            return "User succesfully created! (id = " + user.getId() + ")";
+            return mapper.writeValueAsString(user);
         } catch (Exception ex) {
             return "Error creating the user: " + ex.toString();
         }
@@ -52,22 +56,20 @@ public class UserController {
             user.setEmail(email);
             user.setName(name);
             user.setPassword(password);
-            user.setInspector(inspector);
             user.setScore(score);
             userRepository.save(user);
+            return mapper.writeValueAsString(user);
         } catch (Exception ex) {
             return "Error updating the user: " + ex.toString();
         }
-        return "User succesfully updated!";
     }
 
     @RequestMapping(value = "/user/{user}", method = RequestMethod.DELETE)
     @ResponseBody
     public String delete(@PathVariable("user") Integer userId) {
         try {
-            User user = new User(userId);
-            userRepository.delete(user);
-            return "User succesfully deleted!";
+            userRepository.delete(new User(userId));
+            return "User " + userId + " succesfully deleted!";
         } catch (Exception ex) {
             return "Error deleting the user:" + ex.toString();
         }
@@ -89,7 +91,7 @@ public class UserController {
         try {
             return mapper.writeValueAsString(userRepository.findAllByOrderByScoreDesc());
         } catch (Exception ex) {
-            return "Error finding the users: " + ex.toString();
+            return "Error ranking the users: " + ex.toString();
         }
     }
 
