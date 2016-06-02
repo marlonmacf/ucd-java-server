@@ -4,6 +4,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import domain.entities.Complaint;
 import domain.entities.User;
 import domain.repositories.ComplaintRepository;
+import domain.repositories.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
@@ -13,6 +14,9 @@ public class ComplaintController {
 
     @Autowired
     private ComplaintRepository complaintRepository;
+
+    @Autowired
+    private UserRepository userRepository;
 
     private ObjectMapper mapper;
 
@@ -26,55 +30,117 @@ public class ComplaintController {
         try {
             return mapper.writeValueAsString(complaintRepository.findAll());
         } catch (Exception ex) {
-            return "Error finding the complaints: " + ex.toString();
+            throw new RuntimeException(ex);
         }
     }
 
     @RequestMapping(value = "/complaint", method = RequestMethod.POST)
     @ResponseBody
-    public String insert(@RequestParam(value = "description", defaultValue = "") String latitude, String longitude, String description, Integer userId) {
+    public String insert(@RequestParam(value = "description", defaultValue = "") String latitude, String longitude, String description, Integer idUser) {
         try {
             Complaint complaint = new Complaint();
-            complaint.setUser(new User(userId));
+            complaint.setUser(new User(idUser));
             complaint.setStatus("STARTED");
             complaint.setLatitude(latitude);
             complaint.setLongitude(longitude);
             complaint.setDescription(description);
-            complaintRepository.save(complaint);
-            return mapper.writeValueAsString(complaint);
+            return mapper.writeValueAsString(complaintRepository.save(complaint));
         } catch (Exception ex) {
-            return "Error creating the complaint: " + ex.toString();
+            throw new RuntimeException(ex);
         }
     }
 
     @RequestMapping(value = "/complaint/{complaint}", method = RequestMethod.PUT)
     @ResponseBody
-    public String update(@PathVariable("complaint") Integer complaintId, String description, Integer inspectorId, String status) {
+    public String update(@PathVariable("complaint") Integer idComplaint, String description) {
 
         try {
-            Complaint complaint = complaintRepository.findOne(complaintId);
-            if (description != null) {
-                complaint.setDescription(description);
-            }
-            if (inspectorId != null) {
-                complaint.setInspector(new User(inspectorId));
-                complaint.setStatus(status);
-            }
-            complaintRepository.save(complaint);
-            return mapper.writeValueAsString(complaint);
+            Complaint complaint = complaintRepository.findOne(idComplaint);
+            complaint.setDescription(description);
+            return mapper.writeValueAsString(complaintRepository.save(complaint));
         } catch (Exception ex) {
-            return "Error updating the complaint: " + ex.toString();
+            throw new RuntimeException(ex);
         }
     }
 
     @RequestMapping(value = "/complaint/{complaint}", method = RequestMethod.DELETE)
     @ResponseBody
-    public String delete(@PathVariable("complaint") Integer complaintId) {
+    public Boolean delete(@PathVariable("complaint") Integer idComplaint) {
         try {
-            complaintRepository.delete(new Complaint(complaintId));
-            return "Complaint " + complaintId + " succesfully deleted!";
+            complaintRepository.delete(new Complaint(idComplaint));
+            return true;
         } catch (Exception ex) {
-            return "Error deleting the complaint:" + ex.toString();
+            throw new RuntimeException(ex);
+        }
+    }
+
+    @RequestMapping(value = "/complaint/{complaint}/inspect", method = RequestMethod.GET)
+    @ResponseBody
+    public String inspect(@PathVariable("complaint") Integer idComplaint, Integer idInspector) {
+        try {
+            Complaint complaint = complaintRepository.findOne(idComplaint);
+            User inspector = userRepository.findOne(idInspector);
+            User user = userRepository.findOne(complaint.getUser().getId());
+
+            //Add points to inspector.
+            byte score = inspector.getScore();
+            score += (byte) 1;
+            inspector.setScore(score);
+            userRepository.save(inspector);
+
+            //Add points to user.
+            score = user.getScore();
+            score += (byte) 1;
+            user.setScore(score);
+            userRepository.save(user);
+
+            //Update the complaint.
+            complaint.setStatus("INSPECTED");
+            complaint.setInspector(inspector);
+            return mapper.writeValueAsString(complaintRepository.save(complaint));
+        } catch (Exception ex) {
+            throw new RuntimeException(ex);
+        }
+    }
+
+    @RequestMapping(value = "/complaint/{complaint}/check", method = RequestMethod.GET)
+    @ResponseBody
+    public String check(@PathVariable("complaint") Integer idComplaint, Integer idChecker) {
+        try {
+            Complaint complaint = complaintRepository.findOne(idComplaint);
+            User inspector = userRepository.findOne(complaint.getInspector().getId());
+            User checker = userRepository.findOne(idChecker);
+
+            //Add points to inspector.
+            byte score = inspector.getScore();
+            score += (byte) 1;
+            inspector.setScore(score);
+            userRepository.save(inspector);
+
+            //Add points to checker.
+            score = checker.getScore();
+            score += (byte) 1;
+            checker.setScore(score);
+            userRepository.save(checker);
+
+            //Update the complaint.
+            complaint.setStatus("CHECKED");
+            complaint.setChecker(checker);
+            return mapper.writeValueAsString(complaintRepository.save(complaint));
+        } catch (Exception ex) {
+            throw new RuntimeException(ex);
+        }
+    }
+
+    @RequestMapping(value = "/complaint/{complaint}/denounce", method = RequestMethod.GET)
+    @ResponseBody
+    public String denounce(@PathVariable("complaint") Integer idComplaint) {
+        try {
+            Complaint complaint = complaintRepository.findOne(idComplaint);
+            complaint.setStatus("DENOUNCED");
+            return mapper.writeValueAsString(complaintRepository.save(complaint));
+        } catch (Exception ex) {
+            throw new RuntimeException(ex);
         }
     }
 }

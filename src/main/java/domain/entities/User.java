@@ -29,6 +29,9 @@ public class User {
     private String password;
 
     @NotNull
+    private Byte inspector;
+
+    @NotNull
     private Byte score;
 
     public User() {
@@ -37,6 +40,15 @@ public class User {
 
     public User(Integer id) {
         this.id = id;
+    }
+
+    public User(Integer id, String name, String email, String password, Byte inspector, Byte score) {
+        this.id = id;
+        this.name = name;
+        this.email = email;
+        this.password = password;
+        this.inspector = inspector;
+        this.score = score;
     }
 
     public Integer getId() {
@@ -71,6 +83,14 @@ public class User {
         this.password = password;
     }
 
+    public Byte getInspector() {
+        return inspector;
+    }
+
+    public void setInspector(Byte inspector) {
+        this.inspector = inspector;
+    }
+
     public Byte getScore() {
         return score;
     }
@@ -81,7 +101,7 @@ public class User {
 
     @Override
     public String toString() {
-        return "{id:" + id + ", name:'" + name + ", email:'" + email + ", password:'" + password + ", score:" + score + "}";
+        return "{id:" + id + ", name:'" + name + ", email:'" + email + ", password:'" + password + ", inspector:" + inspector + ", score:" + score + "}";
     }
 
 } // class User

@@ -28,39 +28,39 @@ public class UserController {
         try {
             return mapper.writeValueAsString(userRepository.findAll());
         } catch (Exception ex) {
-            return "Error finding the users: " + ex.toString();
+            throw new RuntimeException(ex);
         }
     }
 
     @RequestMapping(value = "/user", method = RequestMethod.POST)
     @ResponseBody
-    public String insert(String email, String name, String password, Byte score) {
+    public String insert(String email, String name, String password, Byte inspector, Byte score) {
         try {
             User user = new User();
             user.setEmail(email);
             user.setName(name);
             user.setPassword(password);
+            user.setInspector(inspector);
             user.setScore(score);
-            userRepository.save(user);
-            return mapper.writeValueAsString(user);
+            return mapper.writeValueAsString(userRepository.save(user));
         } catch (Exception ex) {
-            return "Error creating the user: " + ex.toString();
+            throw new RuntimeException(ex);
         }
     }
 
     @RequestMapping(value = "/user/{user}", method = RequestMethod.PUT)
     @ResponseBody
-    public String update(@PathVariable("user") Integer userId, String email, String name, String password, Boolean inspector, Byte score) {
+    public String update(@PathVariable("user") Integer userId, String email, String name, String password, Byte inspector, Byte score) {
         try {
             User user = userRepository.findOne(userId);
             user.setEmail(email);
             user.setName(name);
             user.setPassword(password);
+            user.setInspector(inspector);
             user.setScore(score);
-            userRepository.save(user);
-            return mapper.writeValueAsString(user);
+            return mapper.writeValueAsString(userRepository.save(user));
         } catch (Exception ex) {
-            return "Error updating the user: " + ex.toString();
+            throw new RuntimeException(ex);
         }
     }
 
@@ -71,7 +71,7 @@ public class UserController {
             userRepository.delete(new User(userId));
             return "User " + userId + " succesfully deleted!";
         } catch (Exception ex) {
-            return "Error deleting the user:" + ex.toString();
+            throw new RuntimeException(ex);
         }
     }
 
@@ -81,7 +81,7 @@ public class UserController {
         try {
             return mapper.writeValueAsString(userRepository.findByEmailAndPassword(email, password));
         } catch (Exception ex) {
-            return "User not found - " + ex.toString();
+            throw new RuntimeException(ex);
         }
     }
 
@@ -91,7 +91,7 @@ public class UserController {
         try {
             return mapper.writeValueAsString(userRepository.findAllByOrderByScoreDesc());
         } catch (Exception ex) {
-            return "Error ranking the users: " + ex.toString();
+            throw new RuntimeException(ex);
         }
     }
 

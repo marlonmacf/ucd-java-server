@@ -18,10 +18,13 @@ public class Complaint {
     @JoinColumn(name = "id_user")
     private User user;
 
-    @Null
     @ManyToOne
     @JoinColumn(name = "id_inspector")
     private User inspector;
+
+    @ManyToOne
+    @JoinColumn(name = "id_checker")
+    private User checker;
 
     @NotNull
     private String status;
@@ -32,7 +35,6 @@ public class Complaint {
     @NotNull
     private String longitude;
 
-    @Null
     private String description;
 
     @OneToMany(mappedBy = "complaint", cascade = CascadeType.ALL)
@@ -44,6 +46,18 @@ public class Complaint {
 
     public Complaint(Integer id) {
         this.id = id;
+    }
+
+    public Complaint(Integer id, User user, User inspector, User checker, String status, String latitude, String longitude, String description, Set<ComplaintPhoto> complaintPhotos) {
+        this.id = id;
+        this.user = user;
+        this.inspector = inspector;
+        this.checker = checker;
+        this.status = status;
+        this.latitude = latitude;
+        this.longitude = longitude;
+        this.description = description;
+        this.complaintPhotos = complaintPhotos;
     }
 
     public Integer getId() {
@@ -68,6 +82,14 @@ public class Complaint {
 
     public void setInspector(User inspector) {
         this.inspector = inspector;
+    }
+
+    public User getChecker() {
+        return checker;
+    }
+
+    public void setChecker(User checker) {
+        this.checker = checker;
     }
 
     public String getStatus() {
@@ -112,7 +134,7 @@ public class Complaint {
 
     @Override
     public String toString() {
-        return "{id:" + id + ", idUser:" + user.getId() + ", idInspector:" + inspector.getId() + ", status:" + status + ", latitude:" + latitude + ", longitude:" + longitude + "}";
+        return "{id:" + id + ", user:" + user.toString() + ", inspector:" + inspector.toString() + ", checker:" + checker.toString() + ", status:" + status + ", latitude:" + latitude + ", longitude:" + longitude + "}";
     }
 
 }
