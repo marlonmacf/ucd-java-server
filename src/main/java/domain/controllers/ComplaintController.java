@@ -32,7 +32,7 @@ public class ComplaintController {
 
     @RequestMapping(value = "/complaint", method = RequestMethod.POST)
     @ResponseBody
-    public String insert(@RequestParam(value = "description", defaultValue = "") Integer userId, String latitude, String longitude, String description) {
+    public String insert(@RequestParam(value = "description", defaultValue = "") String latitude, String longitude, String description, Integer userId) {
         try {
             Complaint complaint = new Complaint();
             complaint.setUser(new User(userId));
@@ -49,7 +49,7 @@ public class ComplaintController {
 
     @RequestMapping(value = "/complaint/{complaint}", method = RequestMethod.PUT)
     @ResponseBody
-    public String update(@PathVariable("complaint") Integer complaintId, Integer inspectorId, String latitude, String longitude, String description, String status) {
+    public String update(@PathVariable("complaint") Integer complaintId, String latitude, String longitude, String description, Integer inspectorId, String status) {
 
         try {
             Complaint complaint = complaintRepository.findOne(complaintId);
