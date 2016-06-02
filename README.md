@@ -17,13 +17,13 @@ Tecnologias utilizadas no projeto:
 
 |REQUEST|ENDPOINT                         |RETURN         |METHOD/PARAMETERS                                                                |
 |-------|---------------------------------|---------------|---------------------------------------------------------------------------------|
-|GET    |"/user"                          |List<User>     |fetch()                                                                          |
+|GET    |"/user"                          |List User      |fetch()                                                                          |
 |POST   |"/user"                          |User           |insert(String email, String name, String password, Boolean inspector, Byte score)|
 |PUT    |"/user/{user}"                   |User           |update(String email, String name, String password, Boolean inspector, Byte score)|
 |DELETE |"/user/{user}"                   |Boolean        |delete()                                                                         |
 |GET    |"/user/login"                    |User           |login(String email, String password)                                             |
-|GET    |"/user/ranking"                  |List<User>     |ranking()                                                                        |
-|GET    |"/complaint"                     |List<Complaint>|fetch()                                                                          |
+|GET    |"/user/ranking"                  |List User      |ranking()                                                                        |
+|GET    |"/complaint"                     |List Complaint |fetch()                                                                          |
 |POST   |"/complaint"                     |Complaint      |insert(String latitude, String longitude, String description, Integer idUser)    |
 |PUT    |"/complaint/{complaint}"         |Complaint      |update(String description)                                                       |
 |DELETE |"/complaint/{complaint}"         |Boolean        |delete()                                                                         |
