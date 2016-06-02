@@ -49,16 +49,16 @@ public class ComplaintController {
 
     @RequestMapping(value = "/complaint/{complaint}", method = RequestMethod.PUT)
     @ResponseBody
-    public String update(@PathVariable("complaint") Integer complaintId, String latitude, String longitude, String description, Integer inspectorId, String status) {
+    public String update(@PathVariable("complaint") Integer complaintId, String description, Integer inspectorId, String status) {
 
         try {
             Complaint complaint = complaintRepository.findOne(complaintId);
-            complaint.setStatus(status);
-            complaint.setLatitude(latitude);
-            complaint.setLongitude(longitude);
-            complaint.setDescription(description);
+            if (description != null) {
+                complaint.setDescription(description);
+            }
             if (inspectorId != null) {
                 complaint.setInspector(new User(inspectorId));
+                complaint.setStatus(status);
             }
             complaintRepository.save(complaint);
             return mapper.writeValueAsString(complaint);

@@ -15,15 +15,15 @@ Tecnologias utilizadas no projeto:
 
 ######ENDPOINTS
 
-|REQUEST|ENDPOINT                |RETURN         |METHOD/PARAMETERS                                                                                |
-|-------|------------------------|---------------|-------------------------------------------------------------------------------------------------|
-|GET    |"/user"                 |List<User>     |fetch()                                                                                          |
-|POST   |"/user"                 |User           |insert(String email, String name, String password, Boolean inspector, Byte score)                |
-|PUT    |"/user/{user}"          |User           |update(String email, String name, String password, Boolean inspector, Byte score)                |
-|DELETE |"/user/{user}"          |User           |delete()                                                                                         |
-|GET    |"/user/login"           |User           |login(String email, String password)                                                             |
-|GET    |"/user/ranking"         |List<User>     |ranking()                                                                                        |
-|GET    |"/complaint"            |List<Complaint>|fetch()                                                                                          |
-|POST   |"/complaint"            |Complaint      |insert(String latitude, String longitude, String description, Integer userId)                    |
-|PUT    |"/complaint/{complaint}"|Complaint      |update(String latitude, String longitude, String description, Integer inspectorId, String status)|
-|DELETE |"/complaint/{complaint}"|Complaint      |delete ()                                                                                        |
+|REQUEST|ENDPOINT                |RETURN         |METHOD/PARAMETERS                                                                |
+|-------|------------------------|---------------|---------------------------------------------------------------------------------|
+|GET    |"/user"                 |List<User>     |fetch()                                                                          |
+|POST   |"/user"                 |User           |insert(String email, String name, String password, Boolean inspector, Byte score)|
+|PUT    |"/user/{user}"          |User           |update(String email, String name, String password, Boolean inspector, Byte score)|
+|DELETE |"/user/{user}"          |User           |delete()                                                                         |
+|GET    |"/user/login"           |User           |login(String email, String password)                                             |
+|GET    |"/user/ranking"         |List<User>     |ranking()                                                                        |
+|GET    |"/complaint"            |List<Complaint>|fetch()                                                                          |
+|POST   |"/complaint"            |Complaint      |insert(String latitude, String longitude, String description, Integer userId)    |
+|PUT    |"/complaint/{complaint}"|Complaint      |update(String description, Integer inspectorId, String status)                   |
+|DELETE |"/complaint/{complaint}"|Complaint      |delete ()                                                                        |
