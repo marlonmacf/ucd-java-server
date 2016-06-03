@@ -80,6 +80,22 @@ public class ComplaintController {
         try {
             Complaint complaint = complaintRepository.findOne(idComplaint);
             User inspector = userRepository.findOne(idInspector);
+
+            //Update the complaint.
+            complaint.setStatus("INSPECTED");
+            complaint.setInspector(inspector);
+            return mapper.writeValueAsString(complaintRepository.save(complaint));
+        } catch (Exception ex) {
+            throw new RuntimeException(ex);
+        }
+    }
+
+    @RequestMapping(value = "/complaint/{complaint}/check", method = RequestMethod.GET)
+    @ResponseBody
+    public String check(@PathVariable("complaint") Integer idComplaint) {
+        try {
+            Complaint complaint = complaintRepository.findOne(idComplaint);
+            User inspector = userRepository.findOne(complaint.getInspector().getId());
             User user = userRepository.findOne(complaint.getUser().getId());
 
             //Add points to inspector.
@@ -95,37 +111,7 @@ public class ComplaintController {
             userRepository.save(user);
 
             //Update the complaint.
-            complaint.setStatus("INSPECTED");
-            complaint.setInspector(inspector);
-            return mapper.writeValueAsString(complaintRepository.save(complaint));
-        } catch (Exception ex) {
-            throw new RuntimeException(ex);
-        }
-    }
-
-    @RequestMapping(value = "/complaint/{complaint}/check", method = RequestMethod.GET)
-    @ResponseBody
-    public String check(@PathVariable("complaint") Integer idComplaint, Integer idChecker) {
-        try {
-            Complaint complaint = complaintRepository.findOne(idComplaint);
-            User inspector = userRepository.findOne(complaint.getInspector().getId());
-            User checker = userRepository.findOne(idChecker);
-
-            //Add points to inspector.
-            byte score = inspector.getScore();
-            score += (byte) 1;
-            inspector.setScore(score);
-            userRepository.save(inspector);
-
-            //Add points to checker.
-            score = checker.getScore();
-            score += (byte) 1;
-            checker.setScore(score);
-            userRepository.save(checker);
-
-            //Update the complaint.
             complaint.setStatus("CHECKED");
-            complaint.setChecker(checker);
             return mapper.writeValueAsString(complaintRepository.save(complaint));
         } catch (Exception ex) {
             throw new RuntimeException(ex);

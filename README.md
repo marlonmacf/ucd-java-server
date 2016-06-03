@@ -28,5 +28,5 @@ Tecnologias utilizadas no projeto:
 |PUT    |"/complaint/{complaint}"         |Complaint      |update(String description)                                                       |
 |DELETE |"/complaint/{complaint}"         |Boolean        |delete()                                                                         |
 |GET    |"/complaint/{complaint}/inspect" |Complaint      |inspect(Integer idInspector)                                                     |
-|GET    |"/complaint/{complaint}/check"   |Complaint      |check(Integer idChecker)                                                         |
-|GET    |"/complaint/{complaint}/denounce"|Complaint      |denounce(idComplaint)                                                            |
+|GET    |"/complaint/{complaint}/check"   |Complaint      |check()                                                         |
+|GET    |"/complaint/{complaint}/denounce"|Complaint      |denounce()                                                            |
