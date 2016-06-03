@@ -17,16 +17,18 @@ Tecnologias utilizadas no projeto:
 
 |REQUEST|ENDPOINT                         |RETURN         |METHOD/PARAMETERS                                                                |
 |-------|---------------------------------|---------------|---------------------------------------------------------------------------------|
-|GET    |"/user"                          |List User      |fetch()                                                                          |
+|GET    |"/user"                          |List User      |fetchAll()                                                                       |
+|GET    |"/user/{user}"                   |User           |fetchOne()                                                                       |
 |POST   |"/user"                          |User           |insert(String email, String name, String password, Boolean inspector, Byte score)|
 |PUT    |"/user/{user}"                   |User           |update(String email, String name, String password, Boolean inspector, Byte score)|
 |DELETE |"/user/{user}"                   |Boolean        |delete()                                                                         |
-|GET    |"/user/login"                    |User           |login(String email, String password)                                             |
 |GET    |"/user/ranking"                  |List User      |ranking()                                                                        |
-|GET    |"/complaint"                     |List Complaint |fetch()                                                                          |
+|GET    |"/login"                         |User           |login(String email, String password)                                             |
+|GET    |"/complaint"                     |List Complaint |fetchAll()                                                                       |
+|GET    |"/complaint{complaint}"          |Complaint      |fetchOne()                                                                       |
 |POST   |"/complaint"                     |Complaint      |insert(String latitude, String longitude, String description, Integer idUser)    |
 |PUT    |"/complaint/{complaint}"         |Complaint      |update(String description)                                                       |
 |DELETE |"/complaint/{complaint}"         |Boolean        |delete()                                                                         |
 |GET    |"/complaint/{complaint}/inspect" |Complaint      |inspect(Integer idInspector)                                                     |
-|GET    |"/complaint/{complaint}/check"   |Complaint      |check()                                                         |
-|GET    |"/complaint/{complaint}/denounce"|Complaint      |denounce()                                                            |
+|GET    |"/complaint/{complaint}/check"   |Complaint      |check()                                                                          |
+|GET    |"/complaint/{complaint}/denounce"|Complaint      |denounce()                                                                       |

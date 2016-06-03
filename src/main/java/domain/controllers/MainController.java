@@ -17,13 +17,4 @@ public class MainController {
         return "Unidos Contra a Dengue - Aplicação Servidor";
     }
 
-    @RequestMapping("/greeting")
-    @ResponseBody
-    public Map<String, String> greeting(@RequestParam(value = "app", defaultValue = "app") String app) {
-
-        String response = "server/" + app;
-        Map<String, String> params = new HashMap<>();
-        params.put("app", response);
-        return params;
-    }
 }

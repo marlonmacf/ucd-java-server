@@ -1,8 +1,10 @@
 package domain.controllers;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import domain.entities.User;
 import domain.repositories.UserRepository;
+import domain.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -14,7 +16,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 public class UserController {
 
     @Autowired
-    private UserRepository userRepository;
+    private UserService userService;
 
     private ObjectMapper mapper;
 
@@ -24,63 +26,62 @@ public class UserController {
 
     @RequestMapping(value = "/user", method = RequestMethod.GET)
     @ResponseBody
-    public String fetch() {
+    public String index() {
         try {
-            return mapper.writeValueAsString(userRepository.findAll());
-        } catch (Exception ex) {
+            return mapper.writeValueAsString(userService.fetchAll());
+        } catch (JsonProcessingException ex) {
             throw new RuntimeException(ex);
         }
     }
 
+    @RequestMapping(value = "/user/create", method = RequestMethod.GET)
+    @ResponseBody
+    public String create() {
+        return "create";
+    }
+
     @RequestMapping(value = "/user", method = RequestMethod.POST)
     @ResponseBody
-    public String insert(String email, String name, String password, Byte inspector, Byte score) {
+    public String store(String email, String name, String password, Byte inspector, Byte score) {
         try {
-            User user = new User();
-            user.setEmail(email);
-            user.setName(name);
-            user.setPassword(password);
-            user.setInspector(inspector);
-            user.setScore(score);
-            return mapper.writeValueAsString(userRepository.save(user));
-        } catch (Exception ex) {
+            return mapper.writeValueAsString(userService.insert(email, name, password, inspector, score));
+        } catch (JsonProcessingException ex) {
             throw new RuntimeException(ex);
         }
+    }
+
+    @RequestMapping(value = "/user/{user}", method = RequestMethod.GET)
+    @ResponseBody
+    public String show(@PathVariable("user") Integer userId) {
+        try {
+            return mapper.writeValueAsString(userService.fetchOne(userId));
+        } catch (JsonProcessingException ex) {
+            throw new RuntimeException(ex);
+        }
+    }
+
+    @RequestMapping(value = "/user/{user}/edit", method = RequestMethod.GET)
+    @ResponseBody
+    public String edit(@PathVariable("user") Integer userId) {
+        return "edit";
     }
 
     @RequestMapping(value = "/user/{user}", method = RequestMethod.PUT)
     @ResponseBody
     public String update(@PathVariable("user") Integer userId, String email, String name, String password, Byte inspector, Byte score) {
         try {
-            User user = userRepository.findOne(userId);
-            user.setEmail(email);
-            user.setName(name);
-            user.setPassword(password);
-            user.setInspector(inspector);
-            user.setScore(score);
-            return mapper.writeValueAsString(userRepository.save(user));
-        } catch (Exception ex) {
+            return mapper.writeValueAsString(userService.update(userId, email, name, password, inspector, score));
+        } catch (JsonProcessingException ex) {
             throw new RuntimeException(ex);
         }
     }
 
     @RequestMapping(value = "/user/{user}", method = RequestMethod.DELETE)
     @ResponseBody
-    public String delete(@PathVariable("user") Integer userId) {
+    public String destroy(@PathVariable("user") Integer userId) {
         try {
-            userRepository.delete(new User(userId));
-            return "User " + userId + " succesfully deleted!";
-        } catch (Exception ex) {
-            throw new RuntimeException(ex);
-        }
-    }
-
-    @RequestMapping(value = "/user/login", method = RequestMethod.GET)
-    @ResponseBody
-    public String login(String email, String password) {
-        try {
-            return mapper.writeValueAsString(userRepository.findByEmailAndPassword(email, password));
-        } catch (Exception ex) {
+            return mapper.writeValueAsString(userService.delete(userId));
+        } catch (JsonProcessingException ex) {
             throw new RuntimeException(ex);
         }
     }
@@ -89,10 +90,10 @@ public class UserController {
     @ResponseBody
     public String ranking() {
         try {
-            return mapper.writeValueAsString(userRepository.findAllByOrderByScoreDesc());
-        } catch (Exception ex) {
+            return mapper.writeValueAsString(userService.ranking());
+        } catch (JsonProcessingException ex) {
             throw new RuntimeException(ex);
         }
     }
 
-} // class UserController
+}
