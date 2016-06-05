@@ -2,7 +2,6 @@ package domain.entities;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
-import java.util.Set;
 
 /**
  * An entity User composed by six fields (id, name, email, password, inspector, score).
