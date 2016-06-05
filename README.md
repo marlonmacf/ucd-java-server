@@ -22,7 +22,7 @@ Tecnologias utilizadas no projeto:
 |POST   |"/user"                          |User           |insert(String email, String name, String password, Boolean inspector, Byte score)|
 |PUT    |"/user/{user}"                   |User           |update(String email, String name, String password, Boolean inspector, Byte score)|
 |DELETE |"/user/{user}"                   |Boolean        |delete()                                                                         |
-|GET    |"/user/ranking"                  |List User      |ranking()                                                                        |
+|GET    |"/ranking"                       |List User      |ranking()                                                                        |
 |GET    |"/login"                         |User           |login(String email, String password)                                             |
 |GET    |"/complaint"                     |List Complaint |fetchAll()                                                                       |
 |GET    |"/complaint{complaint}"          |Complaint      |fetchOne()                                                                       |
