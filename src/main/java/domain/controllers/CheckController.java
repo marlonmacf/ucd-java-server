@@ -14,8 +14,8 @@ public class CheckController {
     @Autowired
     private ComplaintService complaintService;
 
-    @RequestMapping(value = "/complaint/{complaint}/inspect", method = RequestMethod.GET)
-    public Complaint inspect(@PathVariable("complaint") Integer idComplaint, Integer idInspector) {
-        return complaintService.inspect(idComplaint, idInspector);
+    @RequestMapping(value = "/complaint/{complaint}/check", method = RequestMethod.GET)
+    public Complaint index(@PathVariable("complaint") Integer idComplaint) {
+        return complaintService.check(idComplaint);
     }
 }

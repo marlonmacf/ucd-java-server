@@ -15,7 +15,7 @@ public class DenounceController {
     private ComplaintService complaintService;
 
     @RequestMapping(value = "/complaint/{complaint}/denounce", method = RequestMethod.GET)
-    public Complaint denounce(@PathVariable("complaint") Integer idComplaint) {
+    public Complaint index(@PathVariable("complaint") Integer idComplaint) {
         return complaintService.denounce(idComplaint);
     }
 }

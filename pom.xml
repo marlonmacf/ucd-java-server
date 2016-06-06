@@ -16,7 +16,8 @@
         - Spring MVC
         - Spring Data JPA
         - Hibernate
-        - MS SQL Server
+        - PostgreSQL
+        - Heroku PaaS
     </description>
 
     <!-- Spring Boot -->

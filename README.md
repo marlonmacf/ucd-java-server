@@ -8,6 +8,7 @@ Tecnologias utilizadas no projeto:
 - Projeto Maven
 - Spring Boot
 - Spring MVC
+- Spring REST
 - Spring Data JPA
 - Hibernate
 - PostgreSQL
