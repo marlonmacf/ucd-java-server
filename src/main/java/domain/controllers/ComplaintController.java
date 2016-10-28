@@ -16,7 +16,7 @@ public class ComplaintController {
         return complaintService.fetchAll();
     }
 
-    @RequestMapping(value = "/complaint/{complaint}")
+    @RequestMapping(value = "/complaint/{complaint}", method = RequestMethod.GET)
     public Complaint show(@PathVariable("complaint") Integer complaintId) {
         return complaintService.fetchOne(complaintId);
     }
