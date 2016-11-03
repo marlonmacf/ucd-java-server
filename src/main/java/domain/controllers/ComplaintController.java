@@ -22,7 +22,7 @@ public class ComplaintController {
     }
 
     @RequestMapping(value = "/complaint", method = RequestMethod.POST)
-    public Complaint store(@RequestParam(value = "description", defaultValue = "") String latitude, String longitude, String description, Integer idUser) {
+    public Complaint store(String latitude, String longitude, String description, Integer idUser) {
         return complaintService.insert(latitude, longitude, description, idUser);
     }
 
