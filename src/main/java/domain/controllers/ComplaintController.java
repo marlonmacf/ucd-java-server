@@ -5,6 +5,8 @@ import domain.services.ComplaintService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
+
 @RestController
 public class ComplaintController {
 
@@ -22,8 +24,8 @@ public class ComplaintController {
     }
 
     @RequestMapping(value = "/complaint", method = RequestMethod.POST)
-    public Complaint store(String latitude, String longitude, String description, Integer idUser) {
-        return complaintService.insert(latitude, longitude, description, idUser);
+    public Complaint store(String latitude, String longitude, String description, Integer idUser, ArrayList<String> photosBase) {
+        return complaintService.insert(latitude, longitude, description, idUser, photosBase);
     }
 
     @RequestMapping(value = "/complaint/{complaint}", method = RequestMethod.PUT)

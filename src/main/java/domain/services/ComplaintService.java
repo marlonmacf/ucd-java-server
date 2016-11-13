@@ -1,17 +1,26 @@
 package domain.services;
 
 import domain.entities.Complaint;
+import domain.entities.ComplaintPhoto;
 import domain.entities.User;
+import domain.repositories.ComplaintPhotoRepository;
 import domain.repositories.ComplaintRepository;
 import domain.repositories.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.Set;
 
 @Service
 public class ComplaintService {
 
     @Autowired
     private ComplaintRepository complaintRepository;
+
+    @Autowired
+    private ComplaintPhotoRepository complaintPhotoRepository;
 
     @Autowired
     private UserRepository userRepository;
@@ -32,7 +41,7 @@ public class ComplaintService {
         }
     }
 
-    public Complaint insert(String latitude, String longitude, String description, Integer idUser) {
+    public Complaint insert(String latitude, String longitude, String description, Integer idUser, ArrayList<String> photosBase) {
         try {
             Complaint complaint = new Complaint();
             complaint.setUser(new User(idUser));
@@ -40,7 +49,21 @@ public class ComplaintService {
             complaint.setLatitude(latitude);
             complaint.setLongitude(longitude);
             complaint.setDescription(description);
-            return complaintRepository.save(complaint);
+            complaint = complaintRepository.save(complaint);
+
+            Set<ComplaintPhoto> complaintPhotos = new HashSet<>();
+            for (String photoBase : photosBase) {
+                ComplaintPhoto complaintPhoto = new ComplaintPhoto();
+                complaintPhoto.setComplaint(complaint);
+                complaintPhoto.setExtension(".jpg");
+                complaintPhoto.setName("" + photosBase.indexOf(photoBase));
+                complaintPhoto.setPath("/storage/complaint/" + complaint.getId().toString() + "/" + photosBase.indexOf(photoBase));
+                complaintPhoto.setBase(photoBase);
+                complaintPhotos.add(complaintPhotoRepository.save(complaintPhoto));
+            }
+
+            complaint.setComplaintPhotos(complaintPhotos);
+            return complaint;
         } catch (Exception ex) {
             throw new RuntimeException(ex);
         }
