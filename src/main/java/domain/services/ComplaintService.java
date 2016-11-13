@@ -3,7 +3,6 @@ package domain.services;
 import domain.entities.Complaint;
 import domain.entities.User;
 import domain.repositories.ComplaintRepository;
-import domain.repositories.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -19,7 +18,7 @@ public class ComplaintService {
     private ComplaintPhotoService complaintPhotoService;
 
     @Autowired
-    private UserRepository userRepository;
+    private UserService userService;
 
     public Iterable<Complaint> fetchAll() {
         try {
@@ -40,7 +39,7 @@ public class ComplaintService {
     public Complaint insert(String latitude, String longitude, String description, Integer idUser, ArrayList<String> photosBase) {
         try {
             Complaint complaint = new Complaint();
-            complaint.setUser(userRepository.findOne(idUser));
+            complaint.setUser(userService.fetchOne(idUser));
             complaint.setStatus("STARTED");
             complaint.setLatitude(latitude);
             complaint.setLongitude(longitude);
@@ -48,12 +47,7 @@ public class ComplaintService {
             complaint = complaintRepository.save(complaint);
 
             for (String photoBase : photosBase) {
-                complaintPhotoService.insert(
-                        complaint.getId(),
-                        ".jpg",
-                        "00" + photosBase.indexOf(photoBase),
-                        "/storage/complaint/" + complaint.getId() + "/" + "00" + photosBase.indexOf(photoBase),
-                        photoBase);
+                complaintPhotoService.insert(complaint.getId(), ".jpg", "00" + photosBase.indexOf(photoBase), "/storage/complaint/" + complaint.getId() + "/" + "00" + photosBase.indexOf(photoBase), photoBase);
             }
 
             return complaint;
@@ -85,7 +79,7 @@ public class ComplaintService {
     public Complaint inspect(Integer idComplaint, Integer idInspector) {
         try {
             Complaint complaint = complaintRepository.findOne(idComplaint);
-            User inspector = userRepository.findOne(idInspector);
+            User inspector = userService.fetchOne(idInspector);
 
             //Update the complaint.
             complaint.setStatus("INSPECTED");
@@ -99,20 +93,20 @@ public class ComplaintService {
     public Complaint check(Integer idComplaint) {
         try {
             Complaint complaint = complaintRepository.findOne(idComplaint);
-            User inspector = userRepository.findOne(complaint.getInspector().getId());
-            User user = userRepository.findOne(complaint.getUser().getId());
+            User inspector = userService.fetchOne(complaint.getInspector().getId());
+            User user = userService.fetchOne(complaint.getUser().getId());
 
             //Add points to inspector.
             byte score = inspector.getScore();
             score += (byte) 1;
             inspector.setScore(score);
-            userRepository.save(inspector);
+            userService.update(inspector.getId(), inspector.getEmail(), inspector.getName(), inspector.getPassword(), inspector.getInspector(), inspector.getScore());
 
             //Add points to user.
             score = user.getScore();
             score += (byte) 1;
             user.setScore(score);
-            userRepository.save(user);
+            userService.update(user.getId(), user.getEmail(), user.getName(), user.getPassword(), user.getInspector(), user.getScore());
 
             //Update the complaint.
             complaint.setStatus("CHECKED");
