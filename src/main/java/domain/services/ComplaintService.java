@@ -50,18 +50,21 @@ public class ComplaintService {
             complaint.setLongitude(longitude);
             complaint.setDescription(description);
             complaint = complaintRepository.save(complaint);
+
             Set<ComplaintPhoto> complaintPhotos = new HashSet<>();
-            for (String photoBase : photosBase) {
-                ComplaintPhoto complaintPhoto = new ComplaintPhoto();
-                complaintPhoto.setComplaint(complaintRepository.findOne(complaint.getId()));
-                complaintPhoto.setExtension(".jpg");
-                complaintPhoto.setName("" + photosBase.indexOf(photoBase));
-                complaintPhoto.setPath("/storage/complaint/" + complaint.getId().toString() + "/" + photosBase.indexOf(photoBase));
-                complaintPhoto.setBase(photoBase);
-                complaintPhoto = complaintPhotoRepository.save(complaintPhoto);
-                complaintPhotos.add(complaintPhotoRepository.findOne(complaintPhoto.getId()));
-            }
+
+            ComplaintPhoto complaintPhoto = new ComplaintPhoto();
+            complaintPhoto.setComplaint(complaintRepository.findOne(complaint.getId()));
+            complaintPhoto.setExtension(".jpg");
+            complaintPhoto.setName("nome");
+            complaintPhoto.setPath("/storage/complaint/");
+            complaintPhoto.setBase("010101010101");
+            complaintPhoto = complaintPhotoRepository.save(complaintPhoto);
+
+            complaintPhotos.add(complaintPhotoRepository.findOne(complaintPhoto.getId()));
+
             complaint.setComplaintPhotos(complaintPhotos);
+
             return complaintRepository.save(complaint);
         } catch (Exception ex) {
             throw new RuntimeException(ex);
