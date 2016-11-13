@@ -1,26 +1,19 @@
 package domain.services;
 
 import domain.entities.Complaint;
-import domain.entities.ComplaintPhoto;
 import domain.entities.User;
-import domain.repositories.ComplaintPhotoRepository;
 import domain.repositories.ComplaintRepository;
 import domain.repositories.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.Set;
 
 @Service
 public class ComplaintService {
 
     @Autowired
     private ComplaintRepository complaintRepository;
-
-    @Autowired
-    private ComplaintPhotoRepository complaintPhotoRepository;
 
     @Autowired
     private UserRepository userRepository;
@@ -49,12 +42,7 @@ public class ComplaintService {
             complaint.setLatitude(latitude);
             complaint.setLongitude(longitude);
             complaint.setDescription(description);
-            complaint = complaintRepository.save(complaint);
-
-            ComplaintPhotoService complaintPhotoService = new ComplaintPhotoService();
-            complaintPhotoService.insert(complaint.getId(), ".jpg", "name", "/storage/complaint", "010101010101");
-
-            return complaint;
+            return complaintRepository.save(complaint);
         } catch (Exception ex) {
             throw new RuntimeException(ex);
         }
