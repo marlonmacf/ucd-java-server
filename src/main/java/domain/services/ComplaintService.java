@@ -48,8 +48,10 @@ public class ComplaintService {
 
             Integer count = 0;
             for (String photoBase : photosBase.split(",")) {
-                count++;
-                complaintPhotoService.insert(complaint.getId(), ".jpg", "00" + count, "/storage/complaint/" + complaint.getId() + "/" + "00" + count, photoBase);
+                if (!photoBase.isEmpty()){
+                    count++;
+                    complaintPhotoService.insert(complaint.getId(), ".jpg", "00" + count, "/storage/complaint/" + complaint.getId() + "/" + "00" + count, photoBase);
+                }
             }
 
             return complaint;
