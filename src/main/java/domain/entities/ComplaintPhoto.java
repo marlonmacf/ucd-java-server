@@ -28,6 +28,9 @@ public class ComplaintPhoto {
     @NotNull
     private String path;
 
+    @NotNull
+    private String base;
+
     public ComplaintPhoto() {
         // Default constructor.
     }
@@ -84,9 +87,17 @@ public class ComplaintPhoto {
         this.path = path;
     }
 
+    public String getBase() {
+        return base;
+    }
+
+    public void setBase(String base) {
+        this.base = base;
+    }
+
     @Override
     public String toString() {
-        return "{id:" + id + ", idComplaint:" + complaint.getId() + ", extension:'" + extension + ", name:'" + name + ", pathPhoto:'" + path + "}";
+        return "{id:" + id + ", idComplaint:" + complaint.getId() + ", extension:'" + extension + ", name:'" + name + ", pathPhoto:'" + path + ", basePhoto:'" + base + "}";
     }
 
 }

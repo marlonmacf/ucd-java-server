@@ -120,7 +120,7 @@ public class Complaint {
 
     @Override
     public String toString() {
-        return "{id:" + id + ", user:" + user.toString() + ", inspector:" + inspector.toString() + ", status:" + status + ", latitude:" + latitude + ", longitude:" + longitude + "}";
+        return "{id:" + id + ", idUser:" + user.getId().toString() + ", IdInspector:" + inspector.getId().toString() + ", status:" + status + ", latitude:" + latitude + ", longitude:" + longitude + "}";
     }
 
 }
