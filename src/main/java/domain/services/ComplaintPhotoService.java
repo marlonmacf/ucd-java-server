@@ -28,21 +28,20 @@ public class ComplaintPhotoService {
         }
     }
 
-    public ComplaintPhoto insert(Integer idComplaint, String extension, String name, String path, String base) {
+    public ComplaintPhoto insert(Integer idComplaint, String extension, String name, String path) {
         try {
             ComplaintPhoto complaintPhoto = new ComplaintPhoto();
             complaintPhoto.setComplaint(new Complaint(idComplaint));
             complaintPhoto.setExtension(extension);
             complaintPhoto.setName(name);
             complaintPhoto.setPath(path);
-            complaintPhoto.setBase(base);
             return complaintPhotoRepository.save(complaintPhoto);
         } catch (Exception ex) {
             throw new RuntimeException(ex);
         }
     }
 
-    public ComplaintPhoto update(Integer idComplaintPhoto, Integer idComplaint, String extension, String name, String path, String base) {
+    public ComplaintPhoto update(Integer idComplaintPhoto, Integer idComplaint, String extension, String name, String path) {
 
         try {
             ComplaintPhoto complaintPhoto = complaintPhotoRepository.findOne(idComplaintPhoto);
@@ -50,7 +49,6 @@ public class ComplaintPhotoService {
             complaintPhoto.setExtension(extension);
             complaintPhoto.setName(name);
             complaintPhoto.setPath(path);
-            complaintPhoto.setBase(base);
             return complaintPhotoRepository.save(complaintPhoto);
         } catch (Exception ex) {
             throw new RuntimeException(ex);

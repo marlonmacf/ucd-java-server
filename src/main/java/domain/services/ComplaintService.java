@@ -1,10 +1,14 @@
 package domain.services;
 
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.util.Base64;
 import domain.entities.Complaint;
 import domain.entities.User;
 import domain.repositories.ComplaintRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.ArrayList;
 
@@ -48,9 +52,12 @@ public class ComplaintService {
 
             Integer count = 0;
             for (String photoBase : photosBase.split(",")) {
-                if (!photoBase.isEmpty()){
+                if (!photoBase.isEmpty()) {
+                    String name = "00" + count;
+                    String path = "/storage/complaint/" + complaint.getId() + "/";
+                    String extension = ".jpg";
                     count++;
-                    complaintPhotoService.insert(complaint.getId(), ".jpg", "00" + count, "/storage/complaint/" + complaint.getId() + "/" + "00" + count, photoBase);
+                    complaintPhotoService.insert(complaint.getId(), extension, name, path);
                 }
             }
 

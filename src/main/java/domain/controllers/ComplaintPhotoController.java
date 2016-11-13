@@ -25,13 +25,13 @@ public class ComplaintPhotoController {
     }
 
     @RequestMapping(value = "/complaint-photo", method = RequestMethod.POST)
-    public ComplaintPhoto store(Integer idComplaint, String extension, String name, String path, String base) {
-        return complaintPhotoService.insert(idComplaint, extension, name, path, base);
+    public ComplaintPhoto store(Integer idComplaint, String extension, String name, String path) {
+        return complaintPhotoService.insert(idComplaint, extension, name, path);
     }
 
     @RequestMapping(value = "/complaint-photo/{complaintPhoto}", method = RequestMethod.PUT)
-    public ComplaintPhoto update(@PathVariable("complaintPhoto") Integer idComplaintPhoto, Integer idComplaint, String extension, String name, String path, String base) {
-        return complaintPhotoService.update(idComplaintPhoto, idComplaint, extension, name, path, base);
+    public ComplaintPhoto update(@PathVariable("complaintPhoto") Integer idComplaintPhoto, Integer idComplaint, String extension, String name, String path) {
+        return complaintPhotoService.update(idComplaintPhoto, idComplaint, extension, name, path);
     }
 
     @RequestMapping(value = "/complaint-photo/{complaintPhoto}", method = RequestMethod.DELETE)
