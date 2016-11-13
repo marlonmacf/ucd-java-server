@@ -44,20 +44,22 @@ public class ComplaintService {
     public Complaint insert(String latitude, String longitude, String description, Integer idUser, ArrayList<String> photosBase) {
         try {
             Complaint complaint = new Complaint();
-            complaint.setUser(new User(idUser));
+            complaint.setUser(userRepository.findOne(idUser));
             complaint.setStatus("STARTED");
             complaint.setLatitude(latitude);
             complaint.setLongitude(longitude);
             complaint.setDescription(description);
+            complaint = complaintRepository.save(complaint);
             Set<ComplaintPhoto> complaintPhotos = new HashSet<>();
             for (String photoBase : photosBase) {
                 ComplaintPhoto complaintPhoto = new ComplaintPhoto();
-                complaintPhoto.setComplaint(complaint);
+                complaintPhoto.setComplaint(complaintRepository.findOne(complaint.getId()));
                 complaintPhoto.setExtension(".jpg");
                 complaintPhoto.setName("" + photosBase.indexOf(photoBase));
                 complaintPhoto.setPath("/storage/complaint/" + complaint.getId().toString() + "/" + photosBase.indexOf(photoBase));
                 complaintPhoto.setBase(photoBase);
-                complaintPhotos.add(complaintPhotoRepository.save(complaintPhoto));
+                complaintPhoto = complaintPhotoRepository.save(complaintPhoto);
+                complaintPhotos.add(complaintPhotoRepository.findOne(complaintPhoto.getId()));
             }
             complaint.setComplaintPhotos(complaintPhotos);
             return complaintRepository.save(complaint);
