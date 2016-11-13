@@ -46,10 +46,10 @@ public class ComplaintService {
             complaint.setDescription(description);
             complaint = complaintRepository.save(complaint);
 
-            complaintPhotoService.insert(complaint.getId(), ".jpg", "000", "/storage/complaint/" + complaint.getId() + "/" + "000", "0101010101");
-
+            Integer count = 0;
             for (String photoBase : photosBase.split(",")) {
-                complaintPhotoService.insert(complaint.getId(), ".jpg", "00" + photosBase.indexOf(photoBase), "/storage/complaint/" + complaint.getId() + "/" + "00" + photosBase.indexOf(photoBase), photoBase);
+                count++;
+                complaintPhotoService.insert(complaint.getId(), ".jpg", "00" + count, "/storage/complaint/" + complaint.getId() + "/" + "00" + count, photoBase);
             }
 
             return complaint;
