@@ -36,7 +36,7 @@ public class ComplaintService {
         }
     }
 
-    public Complaint insert(String latitude, String longitude, String description, Integer idUser, ArrayList<String> photosBase) {
+    public Complaint insert(String latitude, String longitude, String description, Integer idUser, String photosBase) {
         try {
             Complaint complaint = new Complaint();
             complaint.setUser(userService.fetchOne(idUser));
@@ -48,9 +48,9 @@ public class ComplaintService {
 
             complaintPhotoService.insert(complaint.getId(), ".jpg", "000", "/storage/complaint/" + complaint.getId() + "/" + "000", "0101010101");
 
-//            for (String photoBase : photosBase) {
-//                complaintPhotoService.insert(complaint.getId(), ".jpg", "00" + photosBase.indexOf(photoBase), "/storage/complaint/" + complaint.getId() + "/" + "00" + photosBase.indexOf(photoBase), photoBase);
-//            }
+            for (String photoBase : photosBase.split(",")) {
+                complaintPhotoService.insert(complaint.getId(), ".jpg", "00" + photosBase.indexOf(photoBase), "/storage/complaint/" + complaint.getId() + "/" + "00" + photosBase.indexOf(photoBase), photoBase);
+            }
 
             return complaint;
         } catch (Exception ex) {

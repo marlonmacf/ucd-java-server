@@ -67,7 +67,7 @@ public class ComplaintServiceTest {
         Integer idUser = null;
         ComplaintService instance = new ComplaintService();
         Complaint expResult = null;
-        ArrayList<String> photosBase = new ArrayList<>();
+        String photosBase = "";
         Complaint result = instance.insert(latitude, longitude, description, idUser, photosBase);
         assertEquals(expResult, result);
         // TODO review the generated test code and remove the default call to fail.

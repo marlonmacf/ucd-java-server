@@ -24,7 +24,7 @@ public class ComplaintController {
     }
 
     @RequestMapping(value = "/complaint", method = RequestMethod.POST)
-    public Complaint store(String latitude, String longitude, String description, Integer idUser, ArrayList<String> photosBase) {
+    public Complaint store(String latitude, String longitude, String description, Integer idUser, String photosBase) {
         return complaintService.insert(latitude, longitude, description, idUser, photosBase);
     }
 
