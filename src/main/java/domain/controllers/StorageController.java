@@ -6,7 +6,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-public class ResourcesStorageController {
+public class StorageController {
 
     @RequestMapping(value = "/storage/complaint/{idComplaint}/{photoName}", method = RequestMethod.GET)
     public byte[] complaintPhoto(@PathVariable("idComplaint") String idComplaint, @PathVariable("photoName") String photoName) {
