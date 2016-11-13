@@ -61,7 +61,7 @@ public class ComplaintService {
             complaintPhoto.setBase("010101010101");
             complaintPhoto = complaintPhotoRepository.save(complaintPhoto);
 
-            complaintPhotos.add(complaintPhotoRepository.findOne(complaintPhoto.getId()));
+            complaintPhotos.add(complaintPhoto);
 
             complaint.setComplaintPhotos(complaintPhotos);
 
