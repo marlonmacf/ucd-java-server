@@ -49,21 +49,18 @@ public class ComplaintService {
             complaint.setLatitude(latitude);
             complaint.setLongitude(longitude);
             complaint.setDescription(description);
-            complaint = complaintRepository.save(complaint);
-
-//            Set<ComplaintPhoto> complaintPhotos = new HashSet<>();
-//            for (String photoBase : photosBase) {
-//                ComplaintPhoto complaintPhoto = new ComplaintPhoto();
-//                complaintPhoto.setComplaint(complaint);
-//                complaintPhoto.setExtension(".jpg");
-//                complaintPhoto.setName("" + photosBase.indexOf(photoBase));
-//                complaintPhoto.setPath("/storage/complaint/" + complaint.getId().toString() + "/" + photosBase.indexOf(photoBase));
-//                complaintPhoto.setBase(photoBase);
-//                complaintPhotos.add(complaintPhotoRepository.save(complaintPhoto));
-//            }
-//
-//            complaint.setComplaintPhotos(complaintPhotos);
-            return complaint;
+            Set<ComplaintPhoto> complaintPhotos = new HashSet<>();
+            for (String photoBase : photosBase) {
+                ComplaintPhoto complaintPhoto = new ComplaintPhoto();
+                complaintPhoto.setComplaint(complaint);
+                complaintPhoto.setExtension(".jpg");
+                complaintPhoto.setName("" + photosBase.indexOf(photoBase));
+                complaintPhoto.setPath("/storage/complaint/" + complaint.getId().toString() + "/" + photosBase.indexOf(photoBase));
+                complaintPhoto.setBase(photoBase);
+                complaintPhotos.add(complaintPhotoRepository.save(complaintPhoto));
+            }
+            complaint.setComplaintPhotos(complaintPhotos);
+            return complaintRepository.save(complaint);
         } catch (Exception ex) {
             throw new RuntimeException(ex);
         }
