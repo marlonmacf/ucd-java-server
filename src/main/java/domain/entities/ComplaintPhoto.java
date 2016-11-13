@@ -39,12 +39,13 @@ public class ComplaintPhoto {
         this.id = id;
     }
 
-    public ComplaintPhoto(Integer id, Complaint complaint, String extension, String name, String path) {
+    public ComplaintPhoto(Integer id, Complaint complaint, String extension, String name, String path, String base) {
         this.id = id;
         this.complaint = complaint;
         this.extension = extension;
         this.name = name;
         this.path = path;
+        this.base = base;
     }
 
     public Integer getId() {
