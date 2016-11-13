@@ -51,21 +51,10 @@ public class ComplaintService {
             complaint.setDescription(description);
             complaint = complaintRepository.save(complaint);
 
-            Set<ComplaintPhoto> complaintPhotos = new HashSet<>();
+            ComplaintPhotoService complaintPhotoService = new ComplaintPhotoService();
+            complaintPhotoService.insert(complaint.getId(), ".jpg", "name", "/storage/complaint", "010101010101");
 
-            ComplaintPhoto complaintPhoto = new ComplaintPhoto();
-            complaintPhoto.setComplaint(complaintRepository.findOne(complaint.getId()));
-            complaintPhoto.setExtension(".jpg");
-            complaintPhoto.setName("nome");
-            complaintPhoto.setPath("/storage/complaint/");
-            complaintPhoto.setBase("010101010101");
-            complaintPhoto = complaintPhotoRepository.save(complaintPhoto);
-
-            complaintPhotos.add(complaintPhoto);
-
-            complaint.setComplaintPhotos(complaintPhotos);
-
-            return complaintRepository.save(complaint);
+            return complaint;
         } catch (Exception ex) {
             throw new RuntimeException(ex);
         }
