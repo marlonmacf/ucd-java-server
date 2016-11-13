@@ -1,16 +1,10 @@
 package domain.services;
 
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
-import android.util.Base64;
 import domain.entities.Complaint;
 import domain.entities.User;
 import domain.repositories.ComplaintRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.web.multipart.MultipartFile;
-
-import java.util.ArrayList;
 
 @Service
 public class ComplaintService {
