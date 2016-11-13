@@ -9,6 +9,8 @@ import org.junit.Test;
 import static org.junit.Assert.*;
 import org.junit.Ignore;
 
+import java.util.ArrayList;
+
 public class ComplaintServiceTest {
 
     public ComplaintServiceTest() {
@@ -65,7 +67,8 @@ public class ComplaintServiceTest {
         Integer idUser = null;
         ComplaintService instance = new ComplaintService();
         Complaint expResult = null;
-        Complaint result = instance.insert(latitude, longitude, description, idUser);
+        ArrayList<String> photosBase = new ArrayList<>();
+        Complaint result = instance.insert(latitude, longitude, description, idUser, photosBase);
         assertEquals(expResult, result);
         // TODO review the generated test code and remove the default call to fail.
         fail("The test case is a prototype.");
