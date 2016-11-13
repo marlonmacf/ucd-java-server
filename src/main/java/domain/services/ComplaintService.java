@@ -16,6 +16,9 @@ public class ComplaintService {
     private ComplaintRepository complaintRepository;
 
     @Autowired
+    private ComplaintPhotoService complaintPhotoService;
+
+    @Autowired
     private UserRepository userRepository;
 
     public Iterable<Complaint> fetchAll() {
@@ -42,7 +45,18 @@ public class ComplaintService {
             complaint.setLatitude(latitude);
             complaint.setLongitude(longitude);
             complaint.setDescription(description);
-            return complaintRepository.save(complaint);
+            complaint = complaintRepository.save(complaint);
+
+            for (String photoBase : photosBase) {
+                complaintPhotoService.insert(
+                        complaint.getId(),
+                        ".jpg",
+                        "00" + photosBase.indexOf(photoBase),
+                        "/storage/complaint/" + complaint.getId() + "/" + "00" + photosBase.indexOf(photoBase),
+                        photoBase);
+            }
+
+            return complaint;
         } catch (Exception ex) {
             throw new RuntimeException(ex);
         }
