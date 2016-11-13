@@ -47,10 +47,8 @@ public class ComplaintService {
             Integer count = 0;
             for (String photoBase : photosBase.split(",")) {
                 if (!photoBase.isEmpty()) {
-                    String name = "00" + count;
-                    String extension = ".png";
                     count++;
-                    complaintPhotoService.insert(complaint.getId(), extension, name, photoBase);
+                    complaintPhotoService.insert(complaint.getId(), ".png", "00" + count, photoBase);
                 }
             }
 
