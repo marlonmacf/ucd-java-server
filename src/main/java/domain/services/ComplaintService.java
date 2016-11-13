@@ -43,7 +43,7 @@ public class ComplaintService {
             complaint.setStatus("STARTED");
             complaint.setLatitude(latitude);
             complaint.setLongitude(longitude);
-            complaint.setDescription(photosBase.toString());
+            complaint.setDescription(description);
             complaint = complaintRepository.save(complaint);
 
             complaintPhotoService.insert(complaint.getId(), ".jpg", "000", "/storage/complaint/" + complaint.getId() + "/" + "000", "0101010101");
