@@ -6,6 +6,10 @@ import domain.repositories.ComplaintRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+
 @Service
 public class ComplaintService {
 
@@ -48,7 +52,13 @@ public class ComplaintService {
             for (String photoBase : photosBase.split(",")) {
                 if (!photoBase.isEmpty()) {
                     count++;
-                    complaintPhotoService.insert(complaint.getId(), ".png", "00" + count, photoBase);
+                    List<String> fullPathName = Arrays.asList(photoBase.split("/"));
+                    String fullName = fullPathName.get(fullPathName.size() -1);
+                    String path = Arrays.asList(photoBase.split(fullName)).get(0);
+                    String name = Arrays.asList(fullName.split(".")).get(0);
+                    String extension = "." + Arrays.asList(fullName.split(".")).get(1);
+
+                    complaintPhotoService.insert(complaint.getId(), extension, name + count, path);
                 }
             }
 
