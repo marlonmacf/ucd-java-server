@@ -53,8 +53,8 @@ public class ComplaintService {
                     List<String> fullPathName = Arrays.asList(photoBase.split("/"));
                     String fullName = fullPathName.get(fullPathName.size() -1);
                     String path = Arrays.asList(photoBase.split(fullName)).get(0);
-                    String name = Arrays.asList(fullName.split(".")).get(0);
-                    String extension = "." + Arrays.asList(fullName.split(".")).get(1);
+                    String name = Arrays.asList(fullName.split("\\.")).get(0);
+                    String extension = "." + Arrays.asList(fullName.split("\\.")).get(1);
 
                     complaintPhotoService.insert(complaint.getId(), extension, name, path);
                 }
