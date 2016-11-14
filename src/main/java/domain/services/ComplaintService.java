@@ -48,17 +48,15 @@ public class ComplaintService {
             complaint.setDescription(description);
             complaint = complaintRepository.save(complaint);
 
-            Integer count = 0;
             for (String photoBase : photosBase.split(",")) {
                 if (!photoBase.isEmpty()) {
-                    count++;
                     List<String> fullPathName = Arrays.asList(photoBase.split("/"));
                     String fullName = fullPathName.get(fullPathName.size() -1);
                     String path = Arrays.asList(photoBase.split(fullName)).get(0);
                     String name = Arrays.asList(fullName.split(".")).get(0);
                     String extension = "." + Arrays.asList(fullName.split(".")).get(1);
 
-                    complaintPhotoService.insert(complaint.getId(), extension, name + count, path);
+                    complaintPhotoService.insert(complaint.getId(), extension, name, path);
                 }
             }
 
