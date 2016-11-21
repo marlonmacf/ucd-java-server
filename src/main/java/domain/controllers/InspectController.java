@@ -11,8 +11,12 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 public class InspectController {
 
-    @Autowired
     private ComplaintService complaintService;
+
+    @Autowired
+    public InspectController(ComplaintService complaintService) {
+        this.complaintService = complaintService;
+    }
 
     @RequestMapping(value = "/complaint/{complaint}/inspect", method = RequestMethod.GET)
     public Complaint index(@PathVariable("complaint") Integer idComplaint, Integer idInspector) {
