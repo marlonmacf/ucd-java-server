@@ -86,7 +86,12 @@ public class ComplaintPhoto {
 
     @Override
     public String toString() {
-        return "{id:" + id + ", idComplaint:" + complaint.getId() + ", extension:'" + extension + ", name:'" + name + ", path:'" + path + "}";
+        return "{" +
+                "id:" + id + ", " +
+                "idComplaint:" + complaint.getId() + ", " +
+                "extension:'" + extension + ", " +
+                "name:'" + name + ", " +
+                "path:'" + path + "}";
     }
 
 }
