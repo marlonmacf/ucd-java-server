@@ -32,7 +32,7 @@ public class Complaint {
 
     private String description;
 
-    @OneToMany(mappedBy = "complaint", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "complaint", fetch = FetchType.EAGER)
     private Set<ComplaintPhoto> complaintPhotos;
 
     public Complaint() {
@@ -43,7 +43,9 @@ public class Complaint {
         this.id = id;
     }
 
-    public Complaint(Integer id, User user, User inspector, String status, String latitude, String longitude, String description, Set<ComplaintPhoto> complaintPhotos) {
+    public Complaint(Integer id, User user, User inspector, String status, String latitude, String longitude,
+                     String description, Set<ComplaintPhoto> complaintPhotos) {
+
         this.id = id;
         this.user = user;
         this.inspector = inspector;
@@ -120,7 +122,13 @@ public class Complaint {
 
     @Override
     public String toString() {
-        return "{id:" + id + ", idUser:" + user.getId().toString() + ", IdInspector:" + inspector.getId().toString() + ", status:" + status + ", latitude:" + latitude + ", longitude:" + longitude + "}";
+        return "{" +
+                "id:" + id + ", " +
+                "idUser:" + user.getId().toString() + ", " +
+                "IdInspector:" + ((inspector != null) ? inspector.getId().toString() : null) + ", " +
+                "status:" + status + ", " +
+                "latitude:" + latitude + ", " +
+                "longitude:" + longitude + "}";
     }
 
 }
