@@ -1,12 +1,11 @@
-package domain.services;
+package domain;
 
-import domain.Development;
 import org.springframework.boot.test.context.SpringBootTest;
 
 @SpringBootTest(classes = Development.class)
-class DevelopmentTest {
+public class DevelopmentTest {
 
-    DevelopmentTest() {
+    public DevelopmentTest() {
         System.setProperty("spring.profiles.active", "development");
     }
 }
