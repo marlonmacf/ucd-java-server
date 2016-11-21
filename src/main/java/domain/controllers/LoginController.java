@@ -10,10 +10,14 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 public class LoginController {
 
-    @Autowired
     private UserService userService;
 
-    @RequestMapping(value = "/login", method = RequestMethod.GET)
+    @Autowired
+    public LoginController(UserService userService) {
+        this.userService = userService;
+    }
+
+    @RequestMapping(value = "/login", method = RequestMethod.POST)
     public User index(String email, String password) {
         return userService.login(email, password);
     }
