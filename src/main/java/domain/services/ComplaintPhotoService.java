@@ -9,8 +9,12 @@ import org.springframework.stereotype.Service;
 @Service
 public class ComplaintPhotoService {
 
-    @Autowired
     private ComplaintPhotoRepository complaintPhotoRepository;
+
+    @Autowired
+    public ComplaintPhotoService(ComplaintPhotoRepository complaintPhotoRepository) {
+        this.complaintPhotoRepository = complaintPhotoRepository;
+    }
 
     public Iterable<ComplaintPhoto> fetchAll() {
         try {
@@ -41,7 +45,8 @@ public class ComplaintPhotoService {
         }
     }
 
-    public ComplaintPhoto update(Integer idComplaintPhoto, Integer idComplaint, String extension, String name, String path) {
+    public ComplaintPhoto update(Integer idComplaintPhoto, Integer idComplaint, String extension, String name,
+                                 String path) {
 
         try {
             ComplaintPhoto complaintPhoto = complaintPhotoRepository.findOne(idComplaintPhoto);
