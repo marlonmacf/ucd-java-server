@@ -11,8 +11,12 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 public class ComplaintPhotoController {
 
-    @Autowired
     private ComplaintPhotoService complaintPhotoService;
+
+    @Autowired
+    public ComplaintPhotoController(ComplaintPhotoService complaintPhotoService) {
+        this.complaintPhotoService = complaintPhotoService;
+    }
 
     @RequestMapping(value = "/complaint-photo", method = RequestMethod.GET)
     public Iterable<ComplaintPhoto> index() {
@@ -30,7 +34,9 @@ public class ComplaintPhotoController {
     }
 
     @RequestMapping(value = "/complaint-photo/{complaintPhoto}", method = RequestMethod.PUT)
-    public ComplaintPhoto update(@PathVariable("complaintPhoto") Integer idComplaintPhoto, Integer idComplaint, String extension, String name, String path) {
+    public ComplaintPhoto update(@PathVariable("complaintPhoto") Integer idComplaintPhoto, Integer idComplaint,
+                                 String extension, String name, String path) {
+
         return complaintPhotoService.update(idComplaintPhoto, idComplaint, extension, name, path);
     }
 
