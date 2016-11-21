@@ -10,5 +10,4 @@ public class MainController {
     public String index() {
         return "Unidos Contra a Dengue - Aplicação Servidor";
     }
-
 }
