@@ -12,14 +12,18 @@ import java.util.List;
 @Service
 public class ComplaintService {
 
-    @Autowired
     private ComplaintRepository complaintRepository;
-
-    @Autowired
     private ComplaintPhotoService complaintPhotoService;
+    private UserService userService;
 
     @Autowired
-    private UserService userService;
+    public ComplaintService(ComplaintRepository complaintRepository, ComplaintPhotoService complaintPhotoService,
+                            UserService userService) {
+
+        this.complaintRepository = complaintRepository;
+        this.complaintPhotoService = complaintPhotoService;
+        this.userService = userService;
+    }
 
     public Iterable<Complaint> fetchAll() {
         try {
@@ -59,7 +63,7 @@ public class ComplaintService {
                 }
             }
 
-            return complaint;
+            return complaintRepository.findOne(complaint.getId());
         } catch (Exception ex) {
             throw new RuntimeException(ex);
         }
@@ -90,9 +94,11 @@ public class ComplaintService {
             Complaint complaint = complaintRepository.findOne(idComplaint);
             User inspector = userService.fetchOne(idInspector);
 
-            //Update the complaint.
-            complaint.setStatus("INSPECTED");
-            complaint.setInspector(inspector);
+            if (inspector.getInspector() == 1) {
+                complaint.setStatus("INSPECTED");
+                complaint.setInspector(inspector);
+            }
+
             return complaintRepository.save(complaint);
         } catch (Exception ex) {
             throw new RuntimeException(ex);
@@ -109,15 +115,17 @@ public class ComplaintService {
             byte score = inspector.getScore();
             score += (byte) 1;
             inspector.setScore(score);
-            userService.update(inspector.getId(), inspector.getEmail(), inspector.getName(), inspector.getPassword(), inspector.getInspector(), inspector.getScore());
+            userService.update(inspector.getId(), inspector.getEmail(), inspector.getName(), inspector.getPassword(),
+                    inspector.getInspector(), inspector.getScore());
 
-            //Add points to user.
+            // Add points to user.
             score = user.getScore();
             score += (byte) 1;
             user.setScore(score);
-            userService.update(user.getId(), user.getEmail(), user.getName(), user.getPassword(), user.getInspector(), user.getScore());
+            userService.update(user.getId(), user.getEmail(), user.getName(), user.getPassword(), user.getInspector(),
+                    user.getScore());
 
-            //Update the complaint.
+            // Update the complaint.
             complaint.setStatus("CHECKED");
             return complaintRepository.save(complaint);
         } catch (Exception ex) {
@@ -129,6 +137,14 @@ public class ComplaintService {
         try {
             Complaint complaint = complaintRepository.findOne(idComplaint);
             complaint.setStatus("DENOUNCED");
+            User user = userService.fetchOne(complaint.getUser().getId());
+
+            // Decreasing the user score.
+            Integer decrease = (Integer.parseInt(user.getScore().toString()) -1);
+            user.setScore(Byte.parseByte(decrease.toString()));
+            user = userService.update(user.getId(), user.getEmail(), user.getName(), user.getPassword(), user.getInspector(),
+                    user.getScore());
+
             return complaintRepository.save(complaint);
         } catch (Exception ex) {
             throw new RuntimeException(ex);
