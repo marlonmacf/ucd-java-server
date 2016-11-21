@@ -9,8 +9,12 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 public class RankingController {
 
-    @Autowired
     private UserService userService;
+
+    @Autowired
+    public RankingController(UserService userService) {
+        this.userService = userService;
+    }
 
     @RequestMapping(value = "/ranking")
     public Iterable<User> index() {
