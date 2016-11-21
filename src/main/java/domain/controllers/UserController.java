@@ -8,8 +8,12 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 public class UserController {
 
-    @Autowired
     private UserService userService;
+
+    @Autowired
+    public UserController(UserService userService) {
+        this.userService = userService;
+    }
 
     @RequestMapping(value = "/user", method = RequestMethod.GET)
     public Iterable<User> index() {
@@ -17,8 +21,8 @@ public class UserController {
     }
 
     @RequestMapping(value = "/user", method = RequestMethod.POST)
-    public User store(String email, String name, String password, Byte inspector, Byte score) {
-        return userService.insert(email, name, password, inspector, score);
+    public User store(String email, String name, String password, String inspector, String score) {
+        return userService.insert(email, name, password, Byte.parseByte(inspector), Byte.parseByte(score));
     }
 
     @RequestMapping(value = "/user/{user}", method = RequestMethod.GET)
@@ -27,13 +31,9 @@ public class UserController {
     }
 
     @RequestMapping(value = "/user/{user}", method = RequestMethod.PUT)
-    public User update(@PathVariable("user") Integer userId, String email, String name, String password, Byte inspector, Byte score) {
+    public User update(@PathVariable("user") Integer userId, String email, String name, String password,
+                       Byte inspector, Byte score) {
+
         return userService.update(userId, email, name, password, inspector, score);
     }
-
-    @RequestMapping(value = "/user/{user}", method = RequestMethod.DELETE)
-    public Boolean destroy(@PathVariable("user") Integer userId) {
-        return userService.delete(userId);
-    }
-
 }
