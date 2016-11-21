@@ -8,8 +8,12 @@ import org.springframework.stereotype.Service;
 @Service
 public class UserService {
 
-    @Autowired
     private UserRepository userRepository;
+
+    @Autowired
+    public UserService(UserRepository userRepository) {
+        this.userRepository = userRepository;
+    }
 
     public Iterable<User> fetchAll() {
         try {
@@ -52,16 +56,6 @@ public class UserService {
             return userRepository.save(user);
         } catch (Exception ex) {
             throw new RuntimeException(ex);
-        }
-    }
-
-    public Boolean delete(Integer userId) {
-        try {
-            userRepository.delete(new User(userId));
-            return true;
-        } catch (Exception ex) {
-            throw new RuntimeException(ex);
-
         }
     }
 
