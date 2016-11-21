@@ -1,4 +1,9 @@
+DELETE FROM ucd.complaint_photo;
+DELETE FROM ucd.complaint;
+DELETE FROM ucd.user;
+
 INSERT INTO ucd.user (
+  id,
   name,
   email,
   password,
@@ -6,6 +11,7 @@ INSERT INTO ucd.user (
   score
 )
 VALUES (
+  1,
   'Marlon',
   'marlonmacf@gmail.com',
   '123456',
@@ -14,6 +20,7 @@ VALUES (
 );
 
 INSERT INTO ucd.user (
+  id,
   name,
   email,
   password,
@@ -21,6 +28,7 @@ INSERT INTO ucd.user (
   score
 )
 VALUES (
+  2,
   'Iago',
   'iago@gmail.com',
   '123456',
@@ -29,6 +37,7 @@ VALUES (
 );
 
 INSERT INTO ucd.complaint (
+  id,
   id_user,
   status,
   latitude,
@@ -37,6 +46,7 @@ INSERT INTO ucd.complaint (
 )
 VALUES (
   1,
+  1,
   'STARTED',
   '-19.7508033',
   '-48.0050021',
@@ -44,6 +54,7 @@ VALUES (
 );
 
 INSERT INTO ucd.complaint_photo (
+  id,
   id_complaint,
   extension,
   name,
@@ -51,18 +62,21 @@ INSERT INTO ucd.complaint_photo (
 )
 VALUES (
   1,
+  1,
   'png',
   '0123abcd',
   '/storage/complaint/1/'
 );
 
 INSERT INTO ucd.complaint_photo (
+  id,
   id_complaint,
   extension,
   name,
   path
 )
 VALUES (
+  2,
   1,
   'png',
   '4567efgh',
