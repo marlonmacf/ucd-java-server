@@ -3,13 +3,6 @@ package domain.entities;
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 
-/**
- * An entity User composed by six fields (id, name, email, password, inspector, score).
- * The Entity annotation indicates that this class is a JPA entity.
- * The Table annotation specifies the name for the table in the db.
- *
- * @author mandrel
- */
 @Entity
 @Table(name = "user", schema = "ucd")
 public class User {
@@ -100,7 +93,12 @@ public class User {
 
     @Override
     public String toString() {
-        return "{id:" + id + ", name:'" + name + ", email:'" + email + ", password:'" + password + ", inspector:" + inspector + ", score:" + score + "}";
+        return "{" +
+                "id:" + id + ", " +
+                "name:'" + name + ", " +
+                "email:'" + email + ", " +
+                "password:'" + password + ", " +
+                "inspector:" + inspector + ", " +
+                "score:" + score + "}";
     }
-
-} // class User
+}
