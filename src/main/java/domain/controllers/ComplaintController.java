@@ -5,13 +5,15 @@ import domain.services.ComplaintService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.ArrayList;
-
 @RestController
 public class ComplaintController {
 
-    @Autowired
     private ComplaintService complaintService;
+
+    @Autowired
+    public ComplaintController(ComplaintService complaintService) {
+        this.complaintService = complaintService;
+    }
 
     @RequestMapping(value = "/complaint", method = RequestMethod.GET)
     public Iterable<Complaint> index() {
