@@ -1,4 +1,4 @@
-#JAVA WEB SERVER
+# JAVA WEB SERVER
 
 http://ucd-server.herokuapp.com/
 
@@ -16,7 +16,7 @@ Tecnologias utilizadas no projeto:
 - PostgreSQL
 - Heroku PaaS
 
-######ENDPOINTS
+###### ENDPOINTS
 
 |REQUEST|ENDPOINT                         |RETURN         |METHOD/PARAMETERS                                                                |
 |-------|---------------------------------|---------------|---------------------------------------------------------------------------------|
